@@ -32,8 +32,26 @@ $("document").ready(function() {
       console.log(question);
       // Create a div for each question
       $("#container").append("<div>" + question + "</div>");
-  // Create radio buttons (inputs)
-  // Add answer choices as text beside radio buttons
+      // Create radio buttons (inputs) and add answer choices as text beside radio buttons
+      for (var j = 0; j < questions[i].answers.length; j++) {
+        var answers = questions[i].answers[j];
+        console.log(answers);
+        $("#container").append("<input type='radio'>" + "<label>" + answers + "</label>" + "</input>");
+      }
+      // var radioNumber = 0;
+      // while (radioNumber !== questions[i].answers.length) {
+      //  var radio = $("#container").append("<input type='radio'>");
+
+       
+          
+      //     radioNumber++;
+     // }
+       // console.log(radioNumber);
+  
+      
+      
+      
+  
 
   // Create a timer
     }
