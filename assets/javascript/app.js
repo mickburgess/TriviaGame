@@ -5,18 +5,21 @@ $("document").ready(function() {
     { 
       question: "What are things?",
       answers: ["A", "B", "C", "D"],
+      answerGroup: 1,
       correctAnswer: 0
     },
 
     {
       question: "Another question?",
       answers: ["A", "B", "C", "D"],
+      answerGroup: 2,
       correctAnswer: 2
     },
 
     {
       question: "Third question?",
       answers: ["A", "B", "C", "D"],
+      answerGroup: 3,
       correctAnswer: 3
     }
   ];
@@ -36,25 +39,11 @@ $("document").ready(function() {
       for (var j = 0; j < questions[i].answers.length; j++) {
         var answers = questions[i].answers[j];
         console.log(answers);
-        $("#container").append("<input type='radio'>" + "<label>" + answers + "</label>" + "</input>");
+        $("#container").append("<input type='radio' name=" + questions[i].answerGroup + ">" + "<label>" + answers + "</label>" + "</input>");
       }
-      // var radioNumber = 0;
-      // while (radioNumber !== questions[i].answers.length) {
-      //  var radio = $("#container").append("<input type='radio'>");
-
-       
-          
-      //     radioNumber++;
-     // }
-       // console.log(radioNumber);
-  
-      
-      
-      
-  
-
-  // Create a timer
     }
+    // Create a timer
+    
   }
   startQuiz();
 });
