@@ -24,9 +24,10 @@ $("document").ready(function() {
     }
   ];
 
+
   // Create a function that will add questions and answer choices
   function startQuiz() {
-    
+    $("#startButton").remove();
   // Loop through and display questions from the array
     for (var i = 0; i < questions.length; i++) {
       var question = questions[i].question;
@@ -45,6 +46,7 @@ $("document").ready(function() {
     var timer = 10;
     var intervalId;
 
+    $("#timer").html("<h2>" + timer + "</h2>");
     function countdown() {
       intervalId = setInterval(decrement, 1000);
     }
@@ -60,5 +62,11 @@ $("document").ready(function() {
     $("#container").append("<div id='finishButton'>" + "<input type='button' value='Finish'>")
     countdown();
   }
-  startQuiz();
+  
+  function takeQuiz() {
+    $("#startButton").on("click", function() {
+      startQuiz();
+    }); 
+  }
+  takeQuiz();
 });
