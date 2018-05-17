@@ -24,8 +24,6 @@ $("document").ready(function() {
     }
   ];
 
-
-
   // Create a function that will add questions and answer choices
   function startQuiz() {
     
@@ -39,11 +37,28 @@ $("document").ready(function() {
       for (var j = 0; j < questions[i].answers.length; j++) {
         var answers = questions[i].answers[j];
         console.log(answers);
-        $("#container").append("<input type='radio' name=" + questions[i].answerGroup + ">" + "<label>" + answers + "</label>" + "</input>");
+        $("#container").append("<input type='radio' name=" + questions[i].answerGroup  + "<label>" + answers + "</label>");
       }
     }
     // Create a timer
-    
+    // timer start time
+    var timer = 10;
+    var intervalId;
+
+    function countdown() {
+      intervalId = setInterval(decrement, 1000);
+    }
+
+    function decrement() {
+      timer--;
+      $("#timer").html("<h2>" + timer + "</h2>");
+
+      if (timer === 0) {
+        clearInterval(intervalId);
+      }
+    }
+    $("#container").append("<div id='finishButton'>" + "<input type='button' value='Finish'>")
+    countdown();
   }
   startQuiz();
 });
