@@ -23,11 +23,19 @@ $("document").ready(function() {
       correctAnswer: 3
     }
   ];
+  var correctAnswers = 0;
+  var incorrectAnswers = 0;
+  var unanswered = 0;
 
+  // timer start time
+  var timer = 60;
 
   // Create a function that will add questions and answer choices
   function startQuiz() {
     $("#startButton").remove();
+    // add timer to screen
+    $("#timer").html("<h2>" + timer + "</h2>");
+
   // Loop through and display questions from the array
     for (var i = 0; i < questions.length; i++) {
       var question = questions[i].question;
@@ -38,15 +46,56 @@ $("document").ready(function() {
       for (var j = 0; j < questions[i].answers.length; j++) {
         var answers = questions[i].answers[j];
         console.log(answers);
-        $("#container").append("<input type='radio' name=" + questions[i].answerGroup  + "<label>" + answers + "</label>");
+        $("#container").append("<input type='radio' value='" + j + "' name=" + questions[i].answerGroup + ">" + "<label>" + answers + "</label>" + "</input>");
+        // var radios = $("<input>");
+        // radios.attr("type", "radio");
+        // radios.attr("name", questions.indexOf(questions[i]));
+        // radios.attr("id", answers + questions.indexOf(questions[i]));
+        // $("#container").append(radios);
+        // var labels = $("<label id=label>");
+        // labels.attr("for", answers + questions.indexOf(questions[i]))
+        // $("#label").text(answers);
+        // radios.wrap(labels);
       }
     }
+    
+    $("#container").append("<div id='finishButton'>" + "<input type='button' value='Finish'>")
+    
+  };
+  
+function endGame() {
+  $("#container").empty();
+  $("#container").append("<h2>All Done!</h2>");
+  $("#container").append("<p id='correct'>" + correctAnswers + "</p>");
+  $("#container").append("<p id='incorrect'>" + incorrectAnswers + "</p>");
+  //$("#container").append("<p id='unanswered'>" + unanswered + "</p>");
+};
+// var userAnswer = questions[i].answerGroup;
+// console.log(questions[i].answerGroup);
+function answerChecker() {
+  for (i = 0; i < questions.length; i++) {
+    var inputName = questions[i].answerGroup;
+    var userAnswer = $("input[" + inputName + "]:checked");
+      if (userAnswer === questions[i].correctAnswer) {
+        correctAnswers++
+      }
+        else if (!userAnswer) {
+          unanswered++
+        }
+        else {
+          incorrectAnswers++
+        }
+  };
+
+   console.log(userAnswer);
+}
+
+  function takeQuiz() {
+    $("#startButton").on("click", function() {
+      startQuiz();
     // Create a timer
-    // timer start time
-    var timer = 10;
     var intervalId;
 
-    $("#timer").html("<h2>" + timer + "</h2>");
     function countdown() {
       intervalId = setInterval(decrement, 1000);
     }
@@ -57,16 +106,16 @@ $("document").ready(function() {
 
       if (timer === 0) {
         clearInterval(intervalId);
+        endGame();
+        answerChecker();
       }
     }
-    $("#container").append("<div id='finishButton'>" + "<input type='button' value='Finish'>")
     countdown();
-  }
-  
-  function takeQuiz() {
-    $("#startButton").on("click", function() {
-      startQuiz();
-    }); 
+    });
+    $("#container").on("click", "#finishButton", function() {
+      endGame();
+      answerChecker();
+    })
   }
   takeQuiz();
 });
