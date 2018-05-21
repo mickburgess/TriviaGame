@@ -64,30 +64,34 @@ $("document").ready(function() {
   };
   
 function endGame() {
-  $("#container").empty();
-  $("#container").append("<h2>All Done!</h2>");
-  $("#container").append("<p id='correct'>" + correctAnswers + "</p>");
-  $("#container").append("<p id='incorrect'>" + incorrectAnswers + "</p>");
-  //$("#container").append("<p id='unanswered'>" + unanswered + "</p>");
+  $("#container").hide();
 };
 // var userAnswer = questions[i].answerGroup;
 // console.log(questions[i].answerGroup);
 function answerChecker() {
-  for (i = 0; i < questions.length; i++) {
+  for ( var i = 0; i < questions.length; i++) {
+    console.log("success");
     var inputName = questions[i].answerGroup;
-    var userAnswer = $("input[" + inputName + "]:checked");
-      if (userAnswer === questions[i].correctAnswer) {
+    var userAnswer = $("input[name=" + inputName + "]:checked").val();
+      if (userAnswer == questions[i].correctAnswer) {
         correctAnswers++
       }
         else if (!userAnswer) {
           unanswered++
+          console.log("unanswered", unanswered);
         }
         else {
           incorrectAnswers++
         }
   };
-
-   console.log(userAnswer);
+  var newDiv = $("<div id=endGame>");
+        newDiv.append("<h2>All Done!</h2>");
+        newDiv.append("<p id='correct'>" + "Correct Answers: " + correctAnswers + "</p>");
+        newDiv.append("<p id='incorrect'>" + "Incorrect Answers: " + incorrectAnswers + "</p>");
+        newDiv.append("<p id='unanswered'>" + "Unanswered: " + unanswered + "</p>");
+        $("#title").append(newDiv);
+  //  console.log(userAnswer);
+  return correctAnswers
 }
 
   function takeQuiz() {
@@ -106,15 +110,16 @@ function answerChecker() {
 
       if (timer === 0) {
         clearInterval(intervalId);
-        endGame();
-        answerChecker();
+        // endGame();
+        // answerChecker();
       }
     }
     countdown();
     });
     $("#container").on("click", "#finishButton", function() {
       endGame();
-      answerChecker();
+      console.log(answerChecker());
+      
     })
   }
   takeQuiz();
